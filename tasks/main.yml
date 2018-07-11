@@ -1,0 +1,42 @@
+---
+
+- name: Check if EPEL repo is already configured
+  check_mode: no
+  stat:
+    path: '{{ epel_repo_file_path }}'
+  register: epel_repo_register_repofile
+
+- name: Install EPEL repository package
+  package:
+    name: '{{ epel_repo_url }}'
+    state: present
+  when: not epel_repo_register_repofile.stat.exists
+
+- name: Import EPEL GPG key
+  ignore_errors: '{{ ansible_check_mode }}'
+  rpm_key:
+    key: '{{ epel_repo_gpg_key_url }}'
+    state: present
+  when: not epel_repo_register_repofile.stat.exists
+
+- name: Set repository baseurls
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ epel_repo_file_path }}'
+    section: '{{ item.key }}'
+    option: 'baseurl'
+    value: '{{ item.value }}'
+    state: present
+    create: no
+    no_extra_spaces: yes
+  loop: '{{ epel_repo_baseurls | dict2items }}'
+
+- name: Cleanup repository metalinks
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ epel_repo_file_path }}'
+    section: '{{ item.key }}'
+    option: 'metalink'
+    state: absent
+    create: no
+  loop: '{{ epel_repo_baseurls | dict2items }}'

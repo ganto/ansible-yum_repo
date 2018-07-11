@@ -1,0 +1,12 @@
+---
+
+- name: Setup EPEL yum repository
+  hosts: all
+  become: True
+  become_user: root
+  gather_facts: True
+
+  roles:
+    - name: ganto.repo-epel
+      tags:
+        - 'repo-epel'
