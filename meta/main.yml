@@ -1,12 +1,13 @@
 ---
 
-dependencies: []
-
 galaxy_info:
-  author: "Reto Gantenbein <reto.gantenbein@linuxmonk.ch>"
+  role_name: yum_repo
   description: Configure yum repository for RHEL/CentOS/Fedora
+  author: Reto Gantenbein <reto.gantenbein@linuxmonk.ch>
   license: Apache-2.0
+
   min_ansible_version: 2.8
+
   platforms:
     - name: EL
       versions:
@@ -16,7 +17,11 @@ galaxy_info:
     - name: Fedora
       versions:
         - all
+
   galaxy_tags:
-    - repository
-    - yum
+    - dnf
     - epel
+    - rpm
+    - yum
+
+dependencies: []
