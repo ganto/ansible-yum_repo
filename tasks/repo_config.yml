@@ -13,8 +13,11 @@
   loop_control:
     label: '{{ item.key }}'
 
-# Avoid 'baseurl' and 'metalink' options being present
-- name: '{{ yum_repo_include_repo }} - Cleanup metalink option'
+#
+# Avoid redundant options to be present if not explicitly defined
+#
+
+- name: '{{ yum_repo_include_repo }} - Cleanup redundant metalink option'
   ignore_errors: '{{ ansible_check_mode }}'
   ini_file:
     path: '{{ yum_repo_file }}'
@@ -22,10 +25,25 @@
     option: 'metalink'
     state: absent
     create: no
-    no_extra_spaces: yes
-  when: ('baseurl' in yum_repo_options[yum_repo_include_repo].keys())
+  when:
+    - ('baseurl' in yum_repo_options[yum_repo_include_repo].keys()) or
+      ('mirrorlist' in yum_repo_options[yum_repo_include_repo].keys())
+    - not 'metalink' in yum_repo_options[yum_repo_include_repo].keys()
 
-- name: '{{ yum_repo_include_repo }} - Cleanup baseurl options'
+- name: '{{ yum_repo_include_repo }} - Cleanup redundant mirrorlist option'
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ yum_repo_file }}'
+    section: '{{ yum_repo_include_repo }}'
+    option: 'mirrorlist'
+    state: absent
+    create: no
+  when:
+    - ('baseurl' in yum_repo_options[yum_repo_include_repo].keys()) or
+      ('metalink' in yum_repo_options[yum_repo_include_repo].keys())
+    - not 'mirrorlist' in yum_repo_options[yum_repo_include_repo].keys()
+
+- name: '{{ yum_repo_include_repo }} - Cleanup redundant baseurl option'
   ignore_errors: '{{ ansible_check_mode }}'
   ini_file:
     path: '{{ yum_repo_file }}'
@@ -33,5 +51,7 @@
     option: 'baseurl'
     state: absent
     create: no
-    no_extra_spaces: yes
-  when: ('metalink' in yum_repo_options[yum_repo_include_repo].keys())
+  when:
+    - ('metalink' in yum_repo_options[yum_repo_include_repo].keys()) or
+      ('mirrorlist' in yum_repo_options[yum_repo_include_repo].keys())
+    - not 'baseurl' in yum_repo_options[yum_repo_include_repo].keys()
