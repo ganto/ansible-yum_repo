@@ -1,31 +1,50 @@
 ---
 
-# Yum repository release package
+# Yum repository release package. If this variable has an empty value, no
+# release package will be installed.
 yum_repo_release_pkg: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
 
-# Repository GPG public key
+# Repository GPG public key. If this variable has an empty value, no GPG
+# public key will be imported.
 yum_repo_gpg_key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
 
 # Repository file path
 yum_repo_file: '/etc/yum.repos.d/epel.repo'
 
-# Repository options
+# Configuration dictionary of repository options
+#
+# The key of each item must correspond to the repository name (the one in
+# square brackets) used in the `.repo` file.
+#
+# The value is another dictionary with the options (key/value) for the
+# corresponding repository. See the 'Repository Options' section in
+# `man yum.conf` or `man dnf.conf` for valid options.
+#
+# Example:
+#
+#   yum_repo_options:
+#     epel:
+#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch'
+#       enabled: '1'
+#     epel-debuginfo:
+#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/debug'
+#       enabled: '0'
+#     epel-source:
+#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/SRPMS'
+#       enabled: '0'
+#
+# By default this variable will be combined of `yum_repo_default_options`
+# and `yum_repo_custom_options` which allows to e.g. define default options
+# globally which will be combined with custom options per host or for a
+# subset of hosts.
+#
 yum_repo_options: '{{ yum_repo_default_options
                       | combine(yum_repo_custom_options, recursive=True) }}'
 
-# Default repository options
-yum_repo_default_options:
-  epel:
-    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch'
-    enabled: '1'
-  epel-debuginfo:
-    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/debug'
-    enabled: '0'
-  epel-source:
-    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/SRPMS'
-    enabled: '0'
+# Configuration dictionary of default repository options. For more information
+# see `yum_repo_options` above.
+yum_repo_default_options: {}
 
-# Custom repository options
+# Configuration dictionary of custom repository options. For more information
+# see `yum_repo_options` above.
 yum_repo_custom_options: {}
-#  epel:
-#    includepkgs: colordiff,etckeeper,htop
