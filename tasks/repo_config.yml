@@ -8,7 +8,6 @@
     option: '{{ item.key }}'
     value: '{{ item.value }}'
     state: present
-    create: no
     no_extra_spaces: yes
   loop: '{{ yum_repo_options[yum_repo_include_repo] | dict2items }}'
   loop_control:
@@ -23,6 +22,7 @@
     option: 'metalink'
     state: absent
     create: no
+    no_extra_spaces: yes
   when: ('baseurl' in yum_repo_options[yum_repo_include_repo].keys())
 
 - name: '{{ yum_repo_include_repo }} - Cleanup baseurl options'
@@ -33,4 +33,5 @@
     option: 'baseurl'
     state: absent
     create: no
+    no_extra_spaces: yes
   when: ('metalink' in yum_repo_options[yum_repo_include_repo].keys())
