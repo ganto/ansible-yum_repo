@@ -4,17 +4,19 @@ dependencies: []
 
 galaxy_info:
   author: "Reto Gantenbein <reto.gantenbein@linuxmonk.ch>"
-  description: EPEL repository for RHEL/CentOS
+  description: Configure yum repository for RHEL/CentOS/Fedora
   license: MIT
-  min_ansible_version: 2.5
+  min_ansible_version: 2.8
   platforms:
     - name: EL
       versions:
         - 6
         - 7
         - 8
+    - name: Fedora
+      versions:
+        - all
   galaxy_tags:
-    - epel
-    - packaging
     - repository
     - yum
+    - epel
