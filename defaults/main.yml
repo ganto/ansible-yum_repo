@@ -3,14 +3,29 @@
 # EPEL release package URL
 epel_repo_url: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
 
-# EPEL gpg key file path
+# GPG public key path
 epel_repo_gpg_key_url: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
 
-# EPEL repository file
+# Repository file path
 epel_repo_file_path: '/etc/yum.repos.d/epel.repo'
 
-# EPEL repository URLs
-epel_repo_baseurls:
-  epel: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch'
-  epel-debuginfo: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/debug'
-  epel-source: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/SRPMS'
+# Repository options
+epel_repo_options: '{{ epel_repo_default_options
+                       | combine(epel_repo_custom_options, recursive=True) }}'
+
+# Default repository options
+epel_repo_default_options:
+  epel:
+    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch'
+    enabled: '1'
+  epel-debuginfo:
+    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/debug'
+    enabled: '0'
+  epel-source:
+    baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/SRPMS'
+    enabled: '0'
+
+# Custom repository options
+epel_repo_custom_options: {}
+#  epel:
+#    includepkgs: colordiff,etckeeper,htop

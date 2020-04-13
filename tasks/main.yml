@@ -19,24 +19,8 @@
     state: present
   when: not epel_repo_register_repofile.stat.exists
 
-- name: Set repository baseurls
-  ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
-    path: '{{ epel_repo_file_path }}'
-    section: '{{ item.key }}'
-    option: 'baseurl'
-    value: '{{ item.value }}'
-    state: present
-    create: no
-    no_extra_spaces: yes
-  loop: '{{ epel_repo_baseurls | dict2items }}'
-
-- name: Cleanup repository metalinks
-  ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
-    path: '{{ epel_repo_file_path }}'
-    section: '{{ item.key }}'
-    option: 'metalink'
-    state: absent
-    create: no
-  loop: '{{ epel_repo_baseurls | dict2items }}'
+- name: Include tasks to configure repositories
+  include_tasks: repo_config.yml
+  loop: '{{ epel_repo_options.keys() | list }}'
+  loop_control:
+    loop_var: epel_repo_include_repo

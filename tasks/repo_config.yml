@@ -1,0 +1,36 @@
+---
+
+- name: '{{ epel_repo_include_repo }} - Set repository options'
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ epel_repo_file_path }}'
+    section: '{{ epel_repo_include_repo }}'
+    option: '{{ item.key }}'
+    value: '{{ item.value }}'
+    state: present
+    create: no
+    no_extra_spaces: yes
+  loop: '{{ epel_repo_options[epel_repo_include_repo] | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+# Avoid 'baseurl' and 'metalink' options being present
+- name: '{{ epel_repo_include_repo }} - Cleanup metalink option'
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ epel_repo_file_path }}'
+    section: '{{ epel_repo_include_repo }}'
+    option: 'metalink'
+    state: absent
+    create: no
+  when: ('baseurl' in epel_repo_options[epel_repo_include_repo].keys())
+
+- name: '{{ epel_repo_include_repo }} - Cleanup baseurl options'
+  ignore_errors: '{{ ansible_check_mode }}'
+  ini_file:
+    path: '{{ epel_repo_file_path }}'
+    section: '{{ epel_repo_include_repo }}'
+    option: 'baseurl'
+    state: absent
+    create: no
+  when: ('metalink' in epel_repo_options[epel_repo_include_repo].keys())
