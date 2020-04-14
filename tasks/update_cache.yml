@@ -12,7 +12,7 @@
   when: ansible_pkg_mgr == 'dnf'
 
 - name: Update repository metadata cache with yum
-  dnf:
+  yum:
     disablerepo: '{{ "*"
                      if (yum_repo_options.keys() | list | length > 0)
                      else omit }}'
