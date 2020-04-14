@@ -48,3 +48,6 @@ yum_repo_default_options: {}
 # Configuration dictionary of custom repository options. For more information
 # see `yum_repo_options` above.
 yum_repo_custom_options: {}
+
+# Update repository metadata cache
+yum_repo_update_cache: True
