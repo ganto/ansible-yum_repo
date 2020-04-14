@@ -24,13 +24,13 @@ yum_repo_file: '/etc/yum.repos.d/epel.repo'
 #
 #   yum_repo_options:
 #     epel:
-#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch'
+#       baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/$basearch'
 #       enabled: '1'
 #     epel-debuginfo:
-#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/debug'
+#       baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/$basearch/debug'
 #       enabled: '0'
 #     epel-source:
-#       baseurl: 'http://pkgs.{{ ansible_domain }}/epel/$releasever/$basearch/SRPMS'
+#       baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/SRPMS'
 #       enabled: '0'
 #
 # By default this variable will be combined of `yum_repo_default_options`

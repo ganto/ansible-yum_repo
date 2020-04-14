@@ -57,11 +57,11 @@ To set e.g. a specific `baseurl` (e.g. a local mirror) define it for each reposi
 
     yum_repo_default_options:
       epel:
-        baseurl: 'http://mirror.example.com/epel/$releasever/$basearch'
+        baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/$basearch'
       epel-debuginfo:
-        baseurl: 'http://mirror.example.com/epel/$releasever/$basearch/debug'
+        baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/$basearch/debug'
       epel-source:
-        baseurl: 'http://mirror.example.com/epel/$releasever/$basearch/SRPMS'
+        baseurl: 'http://mirror.example.com/pub/epel/$releasever/Everything/SRPMS'
 
 The EPEL `.repo` file contains multiple repository definitions. For each of them the `baseurl` option is set accordingly.
 
