@@ -1,7 +1,7 @@
 Ansible Role: ganto.yum_repo
 ============================
 
-**Travis CI:** [![Build Status](https://travis-ci.org/ganto/ansible-yum_repo.svg?branch=master)](https://travis-ci.org/ganto/ansible-yum_repo)
+[![CI](https://github.com/ganto/ansible-yum_repo/workflows/CI/badge.svg?event=push)](https://github.com/ganto/ansible-yum_repo/actions?query=workflow%3ACI)
 
 This role allows you to do any task on YUM repository files you'll ever need. It can:
 
