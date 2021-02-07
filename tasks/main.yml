@@ -8,22 +8,9 @@
     path: '{{ yum_repo_file }}'
   register: yum_repo_register_repofile
 
-- name: Import repository GPG public key
-  ignore_errors: '{{ ansible_check_mode }}'
-  rpm_key:
-    key: '{{ yum_repo_gpg_key }}'
-    state: present
-  when:
-    - not yum_repo_register_repofile.stat.exists
-    - yum_repo_gpg_key | length > 0
-
-- name: Install repository package
-  package:
-    name: '{{ yum_repo_release_pkg }}'
-    state: present
-  when:
-    - not yum_repo_register_repofile.stat.exists
-    - yum_repo_release_pkg | length > 0
+- name: Include tasks to setup repository package and GPG key
+  include_tasks: repo_setup.yml
+  when: not yum_repo_register_repofile.stat.exists
 
 - name: Include tasks to configure repositories
   include_tasks: repo_config.yml
