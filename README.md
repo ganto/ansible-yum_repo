@@ -142,7 +142,7 @@ The role must be run once for each `.repo` file that you want to adjust. To avoi
 License
 -------
 
-[Apache-2.0](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
+[Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 
 
 Author Information
