@@ -9,7 +9,7 @@ driver:
   name: podman
 platforms:
   - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
+    image: ${MOLECULE_IMAGE:-centos:8}
     pre_build_image: true
 provisioner:
   name: ansible

@@ -40,9 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro:
-          - centos7
-          - centos8
+        image:
+          - 'centos:7'
+          - 'centos:8'
 
     steps:
       - name: Check out the codebase.
@@ -63,4 +63,4 @@ jobs:
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_IMAGE: ${{ matrix.image }}
