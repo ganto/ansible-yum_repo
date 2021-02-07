@@ -4,8 +4,29 @@
 
 - name: Verify
   hosts: all
-  gather_facts: false
+
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Check repository configuration file
+      stat:
+        path: '/etc/yum.repos.d/epel.repo'
+      register: verify_register_repofile
+
+    - name: Verify that repository configuration is available
+      assert:
+        quiet: true
+        that: verify_register_repofile.stat.exists
+
+    - name: List repositories
+      changed_when: false
+      command: '{{ "dnf" if ansible_distribution == "Fedora" else "yum" }} repolist'
+      register: verify_register_repolist
+
+    - name: Verify that repository is in repolist
+      assert:
+        quiet: true
+        that: '{% set _repo = [] %}{%
+                  for _line in verify_register_repolist.stdout_lines %}{%
+                    if (_line | regex_search("^epel")) %}{%
+                      set _ = _repo.append(_line) %}{%
+                    endif %}{%
+                  endfor %}{{ _repo | length > 0 }}'
