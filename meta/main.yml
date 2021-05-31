@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 galaxy_info:
+  namespace: ganto
   role_name: yum_repo
   description: Configure yum repository for RHEL/CentOS/Fedora
   author: Reto Gantenbein <reto.gantenbein@linuxmonk.ch>

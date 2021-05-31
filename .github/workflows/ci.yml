@@ -5,6 +5,8 @@ name: CI
   push:
     branches:
       - master
+  schedule:
+    - cron: "42 1 1 * *"
 
 defaults:
   run:
@@ -28,7 +30,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install yamllint ansible-lint
+        run: pip3 install yamllint ansible-lint[community]
 
       - name: Lint code.
         run: |
