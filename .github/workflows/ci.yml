@@ -21,49 +21,57 @@ jobs:
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'ganto.yum_repo'
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
       - name: Install test dependencies.
         run: pip3 install yamllint ansible-lint[community]
 
+      - name: Add checkout to Ansible role path.
+        run: |
+          mkdir -p ~/.ansible/roles
+          ln -s $(pwd) ~/.ansible/roles/
+        shell: bash
+
       - name: Lint code.
         run: |
           yamllint .
-          ansible-lint
+          ansible-lint .
 
   molecule:
     name: Molecule
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        image:
-          - 'centos:7'
-          - 'centos:8'
+        distro:
+          - 'centos7'
+          - 'rockylinux8'
+          - 'rockylinux9'
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'ganto.yum_repo'
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install -r molecule/default/requirements.txt
+        run: pip3 install -r molecule/docker/requirements.txt
 
       - name: Run Molecule tests.
-        run: molecule test
+        run: molecule test -s docker
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_IMAGE: ${{ matrix.image }}
+          MOLECULE_DISTRO: ${{ matrix.distro }}
