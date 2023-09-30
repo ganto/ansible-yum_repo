@@ -4,17 +4,25 @@
 
 dependency:
   name: galaxy
-  enabled: False
+  options:
+    requirements-file: collections.yml
 driver:
   name: podman
 platforms:
   - name: instance
-    image: ${MOLECULE_IMAGE:-centos:8}
-    pre_build_image: true
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-rockylinux8}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: True
+    pre_build_image: True
 provisioner:
   name: ansible
   config_options:
     defaults:
       command_warnings: False
+  log: True
+  options:
+    vvv: True
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
