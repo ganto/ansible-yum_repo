@@ -4,20 +4,20 @@
 
 - name: Check if repository configuration is available
   check_mode: no
-  stat:
+  ansible.builtin.stat:
     path: '{{ yum_repo_file }}'
   register: yum_repo_register_repofile
 
 - name: Include tasks to setup repository package and GPG key
-  include_tasks: repo_setup.yml
+  ansible.builtin.include_tasks: repo_setup.yml
   when: not yum_repo_register_repofile.stat.exists
 
 - name: Include tasks to configure repositories
-  include_tasks: repo_config.yml
+  ansible.builtin.include_tasks: repo_config.yml
   loop: '{{ yum_repo_options.keys() | list }}'
   loop_control:
     loop_var: yum_repo_include_repo
 
 - name: Include tasks to update repository metadata cache
-  include_tasks: update_cache.yml
+  ansible.builtin.include_tasks: update_cache.yml
   when: yum_repo_update_cache | bool

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 - name: Update repository metadata cache with dnf
-  dnf:
+  ansible.builtin.dnf:
     disablerepo: '{{ "*"
                      if (yum_repo_options.keys() | list | length > 0)
                      else omit }}'
@@ -14,7 +14,7 @@
   when: ansible_pkg_mgr == 'dnf'
 
 - name: Update repository metadata cache with yum
-  yum:
+  ansible.builtin.yum:
     disablerepo: '{{ "*"
                      if (yum_repo_options.keys() | list | length > 0)
                      else omit }}'
