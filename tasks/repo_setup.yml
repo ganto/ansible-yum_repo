@@ -4,7 +4,7 @@
 
 - name: Import repository remote GPG public key
   ignore_errors: '{{ ansible_check_mode }}'
-  rpm_key:
+  ansible.builtin.rpm_key:
     key: '{{ yum_repo_gpg_key }}'
     state: present
   when:
@@ -12,7 +12,7 @@
     - yum_repo_gpg_key | regex_search('^http')
 
 - name: Install repository package
-  package:
+  ansible.builtin.package:
     name: '{{ yum_repo_release_pkg }}'
     state: present
   when:
@@ -20,7 +20,7 @@
 
 - name: Import repository local GPG public key
   ignore_errors: '{{ ansible_check_mode }}'
-  rpm_key:
+  ansible.builtin.rpm_key:
     key: '{{ yum_repo_gpg_key }}'
     state: present
   when:

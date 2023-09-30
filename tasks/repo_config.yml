@@ -4,7 +4,7 @@
 
 - name: '{{ yum_repo_include_repo }} - Set repository options'
   ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
+  community.general.ini_file:
     path: '{{ yum_repo_file }}'
     section: '{{ yum_repo_include_repo }}'
     option: '{{ item.key }}'
@@ -22,7 +22,7 @@
 
 - name: '{{ yum_repo_include_repo }} - Cleanup redundant metalink option'
   ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
+  community.general.ini_file:
     path: '{{ yum_repo_file }}'
     section: '{{ yum_repo_include_repo }}'
     option: 'metalink'
@@ -35,7 +35,7 @@
 
 - name: '{{ yum_repo_include_repo }} - Cleanup redundant mirrorlist option'
   ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
+  community.general.ini_file:
     path: '{{ yum_repo_file }}'
     section: '{{ yum_repo_include_repo }}'
     option: 'mirrorlist'
@@ -48,7 +48,7 @@
 
 - name: '{{ yum_repo_include_repo }} - Cleanup redundant baseurl option'
   ignore_errors: '{{ ansible_check_mode }}'
-  ini_file:
+  community.general.ini_file:
     path: '{{ yum_repo_file }}'
     section: '{{ yum_repo_include_repo }}'
     option: 'baseurl'
