@@ -11,15 +11,3 @@
                     if (yum_repo_options.keys() | list | length > 0)
                     else omit }}'
     update_cache: yes
-  when: ansible_pkg_mgr == 'dnf'
-
-- name: Update repository metadata cache with yum
-  ansible.builtin.yum:
-    disablerepo: '{{ "*"
-                     if (yum_repo_options.keys() | list | length > 0)
-                     else omit }}'
-    enablerepo: '{{ yum_repo_options.keys() | list | join(",")
-                    if (yum_repo_options.keys() | list | length > 0)
-                    else omit }}'
-    update_cache: yes
-  when: ansible_pkg_mgr == 'yum'
