@@ -4,7 +4,8 @@
 
 # Yum repository release package. If this variable has an empty value, no
 # release package will be installed.
-yum_repo_release_pkg: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
+yum_repo_release_pkg: >
+  https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
 
 # Repository GPG public key. If this variable has an empty value, no GPG
 # public key will be imported.
