@@ -7,22 +7,25 @@
 
   tasks:
     - name: Check repository configuration file
-      stat:
+      ansible.builtin.stat:
         path: '/etc/yum.repos.d/epel.repo'
       register: verify_register_repofile
 
     - name: Verify that repository configuration is available
-      assert:
+      ansible.builtin.assert:
         quiet: true
         that: verify_register_repofile.stat.exists
 
     - name: List repositories
       changed_when: false
-      command: '{{ "dnf" if ansible_distribution == "Fedora" else "yum" }} repolist'
+      ansible.builtin.command:
+        argv:
+          - '{{ "dnf" if ansible_distribution == "Fedora" else "yum" }}'
+          - repolist
       register: verify_register_repolist
 
     - name: Verify that repository is in repolist
-      assert:
+      ansible.builtin.assert:
         quiet: true
         that: '{% set _repo = [] %}{%
                   for _line in verify_register_repolist.stdout_lines %}{%
