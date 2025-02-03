@@ -1,7 +1,8 @@
 Ansible Role: ganto.yum_repo
 ============================
 
-[![CI](https://github.com/ganto/ansible-yum_repo/workflows/CI/badge.svg?event=push)](https://github.com/ganto/ansible-yum_repo/actions?query=workflow%3ACI)
+[![CI](https://github.com/ganto/ansible-yum_repo/actions/workflows/ci.yml/badge.svg)](https://github.com/ganto/ansible-yum_repo/actions/workflows/ci.yml)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-ganto.yum__repo-blue.svg?style=flat&logo=ansible)](https://galaxy.ansible.com/ganto/yum_repo)
 
 This role allows you to do any task on YUM repository files you'll ever need. It can:
 
