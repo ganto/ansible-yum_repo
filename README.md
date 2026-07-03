@@ -155,7 +155,7 @@ pip install -r molecule/default/requirements.txt        # for podman
 pip install -r molecule/docker/requirements.txt         # for docker
 ```
 
-2. Run the test suite. The options in brackets are optional but useful if you need to troubleshoot issues:
+2. Run the test suite. When using docker, then you need to add the `-s docker` option. The options in brackets are optional but useful if you need to troubleshoot issues:
 
 ```
 molecule [-vvv] test [--destroy never][-s docker]
