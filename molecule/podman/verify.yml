@@ -27,9 +27,6 @@
     - name: Verify that repository is in repolist
       ansible.builtin.assert:
         quiet: true
-        that: '{% set _repo = [] %}{%
-                  for _line in verify_register_repolist.stdout_lines %}{%
-                    if (_line | regex_search("^epel")) %}{%
-                      set _ = _repo.append(_line) %}{%
-                    endif %}{%
-                  endfor %}{{ _repo | length > 0 }}'
+        that:
+          - verify_register_repolist.stdout_lines
+            | select('match', 'epel') | list | length > 0
