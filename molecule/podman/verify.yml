@@ -20,7 +20,7 @@
       changed_when: false
       ansible.builtin.command:
         argv:
-          - '{{ "dnf" if ansible_distribution == "Fedora" else "yum" }}'
+          - '{{ "dnf" if ansible_facts["distribution"] == "Fedora" else "yum" }}'
           - repolist
       register: verify_register_repolist
 
