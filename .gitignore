@@ -1,0 +1,9 @@
+# The project-wide .gitignore file
+
+### Ansible ###
+*.retry
+.ansible/
+
+### Python ###
+__pycache__/
+*.py[cod]
